@@ -1,4 +1,4 @@
-from BP12Scripts.nchangPy import nemo_fxns as nf
+from nchangPy import nemo_fxns as nf
 import pandas as pd
 import xarray as xr
 from typing import List, Tuple
