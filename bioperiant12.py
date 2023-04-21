@@ -1,4 +1,4 @@
-from BP12Scripts import utils
+import utils
 import os
 import pandas as pd
 import xarray as xr
@@ -147,12 +147,10 @@ class BP12DataProcessor():
             xda_processed["y"] = self.lat2d[:, 0]
 
             # Rename the dimensions and sort the data according to their coordinates
-            xda_processed = xda_processed.rename(
-                {"time_counter": "time", "y": "lat", "x": "lon"})
+            xda_processed = xda_processed.rename({"time_counter": "time", "y": "lat", "x": "lon"})
             xda_processed = xda_processed.isel(time=xda_processed.indexes["time"].argsort(),
-                                               lat=xda_processed.indexes["lat"].argsort(
-            ),
-                lon=xda_processed.indexes["lon"].argsort())
+                                               lat=xda_processed.indexes["lat"].argsort(),
+                                               lon=xda_processed.indexes["lon"].argsort())
 
             # Append to the list of processed data
             list_processed_xdas.append(xda_processed)
