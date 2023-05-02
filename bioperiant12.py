@@ -171,5 +171,11 @@ class BP12DataProcessor():
 
         # Rescale the data of the variables
         processed_xds = utils.rescale_vars_data(processed_xds)
+        processed_xds = processed_xds.chunk({"time": 100, "lat": 500, "lon": 1000})
+        processed_xds.attrs = {"Conventions": "GDT 1.3",
+                               "production": "NEMO",
+                               "output_frequency": "5d",
+                               "CONFIG": "BIOPERIANT12",
+                               "CASE": "CNCLNG01"}
 
-        return processed_xds.chunk({"time": 100, "lat": 500, "lon": 1000})
+        return processed_xds
