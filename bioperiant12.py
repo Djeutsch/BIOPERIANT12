@@ -41,6 +41,9 @@ class BP12DataLoader():
             error = f"Sorry! So far, BIOPERIANT12 only has 1-daily and 5-daily outputs."
             raise TypeError(error)
         self.flag = flag
+    
+    def __repr__(self):
+        return f"<BP12DataLoader for {self.time_step} ouputs from {self.year_start} to {self.year_end}>"
 
     def find_files(self) -> Tuple[list, list]:
         """
@@ -110,11 +113,15 @@ class BP12DataProcessor():
         Args:
             bp12_ocean_mask_path (str): the path to the ocean mask of BIOPERIANT12 data.
         """
+        self.bp12_ocean_mask_path = bp12_ocean_mask_path
         logger.info(" BIOPERIANT12 data processor instantiation")
-        with nc4.Dataset(bp12_ocean_mask_path) as nc_data:
+        with nc4.Dataset(self.bp12_ocean_mask_path) as nc_data:
             self.lon2d = nc_data.variables['nav_lon'][:, 2:].copy()
             self.lat2d = nc_data.variables['nav_lat'][:, 2:].copy()
             self.tmask = nc_data.variables['tmask'][0, :, :, 2:].copy()
+            
+    def __repr__(self):
+        return f"<BP12DataProcessor using the ocean mask @\n {self.bp12_ocean_mask_path}>"
 
     def process(self, xds_params: Tuple[xr.Dataset, list, list], var_names: List[str],
                 var_names_with_profile: List[str] = [None]) -> xr.Dataset:
