@@ -43,7 +43,7 @@ class BP12DataLoader():
         self.flag = flag
     
     def __repr__(self):
-        return f"<BP12DataLoader for {self.time_step} ouputs from {self.year_start} to {self.year_end}>"
+        return f"<BP12DataLoader for {self.time_step} outputs from {self.year_start} to {self.year_end}>"
 
     def find_files(self) -> Tuple[list, list]:
         """
