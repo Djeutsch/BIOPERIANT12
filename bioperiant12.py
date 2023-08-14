@@ -101,7 +101,7 @@ class BP12DataLoader():
         # Load all the datasets at once
         xds = xr.open_mfdataset(paths=filenames, decode_times=False,
                                 concat_dim="time_counter",
-                                chunks={"y": 500, "x": 1000})
+                                parallel=True)
 
         return xds, missingfiles, time_axis
 
