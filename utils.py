@@ -140,9 +140,14 @@ def rescale_vars_data(xds: xr.Dataset) -> xr.Dataset:
     for var_name in list(xds.data_vars):
         print(f" {var_name}: ", end=" ")
         if get_var_scaling_params(var_name):
-            # Get the coefficient and rescale the data
+            # Get the coefficient
             Coef, Cmin, Cmax, Cstep = get_var_scaling_params(var_name)
-            xds[var_name].data = Coef*xds[var_name].data
+            # Rescale the data
+            xda_adj = xds[var_name].copy()
+            xda_adj.data = Coef*xda_adj.data
+            mask_limit = (xda_adj>=Cmin) & (xda_adj<=Cmax)
+            xds[var_name].data = xda_adj.where(mask_limit).data
+            
             print(f"{Coef = }, {Cmin = }, {Cmax = }, and {Cstep = }", end="\n")
 
     return xds

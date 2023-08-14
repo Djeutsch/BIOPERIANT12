@@ -77,10 +77,14 @@ class BP12DataLoader():
                 f" {len(filenames)} files found and {len(missingfiles)} file(s) missing!")
 
         return filenames, missingfiles
-
-    def load(self) -> Tuple[xr.Dataset, list, list]:
+    
+    def load(self, in_parallel: bool = False) -> Tuple[xr.Dataset, list, list]:
         """
         Load at once all the datasets corresponding to the provided features and directory.
+
+        Args:
+            in_parallel (bool, optional): If True, the open and preprocess steps will be performed in parallel using ``dask.delayed``. Defaults to False.
+
         Returns:
             Tuple[xr.Dataset, list, list]: _description_
         """
@@ -99,9 +103,14 @@ class BP12DataLoader():
                 print(f" {file.split(self.input_dir)[-1]}")
 
         # Load all the datasets at once
-        xds = xr.open_mfdataset(paths=filenames, decode_times=False,
-                                concat_dim="time_counter",
-                                parallel=True)
+        if in_parallel:
+            xds = xr.open_mfdataset(paths=filenames, decode_times=False,
+                                    concat_dim="time_counter",
+                                    parallel=in_parallel)
+        else:
+            xds = xr.open_mfdataset(paths=filenames, decode_times=False,
+                                    concat_dim="time_counter",
+                                    chunks={"y": 500, "x": 1000})
 
         return xds, missingfiles, time_axis
 
