@@ -1,5 +1,5 @@
 # Initialization code
 
-from . import bioperiant12
+from . import bioperiant_main
 
-__all__ = ['bioperiant12']
+__all__ = ['bioperiant_main']

@@ -116,31 +116,72 @@ class BP12DataLoader():
 
 
 class BP12DataProcessor():
-    def __init__(self, bp12_ocean_mask_path: str) -> None:
+    mpath = "/mnt/lustre/groups/erth0834/lustre3p/MODELS/BIOPERIANT12/BIOPERIANT12-I/PERIANT12_mask.nc"
+
+    def __init__(self, path_to_ocean_mask: str = mpath) -> None:
         """
         This is the BIOPERIANT12 data processor module.
         Args:
-            bp12_ocean_mask_path (str): the path to the ocean mask of BIOPERIANT12 data.
+            path_to_ocean_mask (str): the path to the ocean mask of BIOPERIANT12 data.
         """
-        self.bp12_ocean_mask_path = bp12_ocean_mask_path
+        self.path_to_ocean_mask = path_to_ocean_mask
         logger.info(" BIOPERIANT12 data processor instantiation")
-        with nc4.Dataset(self.bp12_ocean_mask_path) as nc_data:
-            self.lon2d = nc_data.variables['nav_lon'][:, 2:].copy()
-            self.lat2d = nc_data.variables['nav_lat'][:, 2:].copy()
-            self.tmask = nc_data.variables['tmask'][0, :, :, 2:].copy()
+        if os.path.isfile(self.path_to_ocean_mask):
+            with nc4.Dataset(self.path_to_ocean_mask) as nc_data:
+                self.lon2d = nc_data.variables['nav_lon'][:].copy()
+                self.lat2d = nc_data.variables['nav_lat'][:].copy()
+                self.tmask = nc_data.variables['tmask'][0, :].copy()
+        else:
+            error = f"The ocean mask file doesn't exist. Does the following path exist?\n{self.path_to_ocean_mask}"
+            raise TypeError(error)
             
     def __repr__(self):
-        return f"<BP12DataProcessor using the ocean mask @\n {self.bp12_ocean_mask_path}>"
+        return f"<BP12DataProcessor is using ocean mask from \n {self.path_to_ocean_mask}>"
 
-    def process(self, xds_params: Tuple[xr.Dataset, list, list], var_names: List[str],
-                var_names_with_profile: List[str] = [None]) -> xr.Dataset:
+    def refine_coords(self, xdata_array: xr.DataArray) -> xr.DataArray:
+        """
+        Apply the ocean mask to the provided BIOPERIANT12 model data variable,
+        update the dimenssions & coordinates.
+
+        Args:
+            xdata_array (xr.DataArray): _description_
+
+        Returns:
+            xr.DataArray: _description_
+        """
+        logger.info(" Coordinates conversion")
+        if len(xdata_array.shape) >= 4:
+            # ocean mask at zlevel > 0
+            xda = xdata_array[:].where(self.tmask[:] == 1)
+            xda = xda.rename({"deptht": "depth"})
+        else:
+            # ocean mask at zlevel = 0
+            xda = xda[:].where(self.tmask[0, :] == 1)
+
+        # Update the values of x/lon and y/lat coordinates
+        xda.assign_coords(x=self.lon2d[0, :], y=self.lat2d[:, 0])
+        xda["x"] = self.lon2d[0, :]
+        xda["y"] = self.lat2d[:, 0]
+
+        # Rename the dimensions and sort the data according to their coordinates
+        if len(xda.shape) >= 3:
+            xda = xda.rename({"time_counter": "time", "y": "lat", "x": "lon"})
+            xda = xda.isel(time=xda.indexes["time"].argsort(),
+                           lat=xda.indexes["lat"].argsort(),
+                           lon=xda.indexes["lon"].argsort())
+        else:
+            xda = xda.rename({"y": "lat", "x": "lon"})
+            xda = xda.isel(lat=xda.indexes["lat"].argsort(),
+                           lon=xda.indexes["lon"].argsort())
+        return xda
+
+    def process(self, xds_params: Tuple[xr.Dataset, list, list], var_names: List[str]) -> xr.Dataset:
         """
         Extract the variables of interest of BIOPERIANT12 model data and apply the ocean mask;
         update the dimenssions & coordinates, and rescale the data of extracted variables.
         Args:
             xds_params (Tuple[xr.Dataset, list, list]): _description_
             var_names (List[str]): _description_
-            var_names_with_profile (List[str], optional): _description_. Defaults to [None].
 
         Returns:
             xr.Dataset: _description_
@@ -151,23 +192,7 @@ class BP12DataProcessor():
         time_axis = xds_params[2]
         list_processed_xdas = []
         for var_name in var_names:
-            if var_name in var_names_with_profile:
-                xda_processed = xds[var_name][:, 0, :, 2:].where(self.tmask[0, :] == 1)
-                xda_processed = xda_processed.drop(["deptht"])
-            else:
-                xda_processed = xds[var_name][:, :, 2:].where(self.tmask[0, :] == 1)
-
-            # Update the values of x/lon and y/lat coordinates
-            xda_processed.assign_coords(x=self.lon2d[0, :], y=self.lat2d[:, 0])
-            xda_processed["x"] = self.lon2d[0, :]
-            xda_processed["y"] = self.lat2d[:, 0]
-
-            # Rename the dimensions and sort the data according to their coordinates
-            xda_processed = xda_processed.rename({"time_counter": "time", "y": "lat", "x": "lon"})
-            xda_processed = xda_processed.isel(time=xda_processed.indexes["time"].argsort(),
-                                               lat=xda_processed.indexes["lat"].argsort(),
-                                               lon=xda_processed.indexes["lon"].argsort())
-
+            xda_processed = self.refine_coords(xds[var_name])
             # Append to the list of processed data
             list_processed_xdas.append(xda_processed)
 
