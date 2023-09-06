@@ -10,7 +10,7 @@ We have a series of tutorials on Jupyter notebooks in the notebooks folder. We r
 ### Data loading
 1. Import the BIOPERIANT12 module:
 ```python
-import bioperiant12 as bp12
+import bioperiant_main as mbp
 ```
 2. Assign the data loader attributes and call it:
 ```python
@@ -19,7 +19,7 @@ year_start = 1991
 year_end = 2010
 time_step = "5-daily"
 
-bp12_diadT = bp12.BP12DataLoader(suffix_endwith=suffix_endwith,
+bp12_diadT = mbp.BP12DataLoader(suffix_endwith=suffix_endwith,
                                  year_start=year_start,
                                  year_end=year_end,
                                  time_step=time_step)
@@ -33,7 +33,7 @@ xds_diadT = bp12_diadT.load()
 4. Assign the data loader attributes and call it:
 ```python
 ocean_mask_path = "../ocean_mask.nc" # A netCDF file (.nc format)
-bp12_processor = bp12.BP12DataProcessor(bp12_ocean_mask_path=ocean_mask_path)
+bp12_processor = mbp.BP12DataProcessor(path_to_ocean_mask=ocean_mask_path)
 ```
 5. Pre-process the variables of interest:
 ```python
