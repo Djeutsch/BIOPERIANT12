@@ -1,0 +1,5 @@
+netCDF4==1.6.1
+netCDF4==1.6.4
+numpy==1.24.4
+pandas==1.5.3
+xarray==2022.6.0
