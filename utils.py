@@ -1,7 +1,8 @@
 from nchangPy import nemo_fxns as nf
 import pandas as pd
 import xarray as xr
-from typing import List, Tuple
+import numpy as np
+from typing import Tuple
 
 import logging
 logging.basicConfig(level=logging.INFO)
@@ -151,3 +152,22 @@ def rescale_vars_data(xds: xr.Dataset) -> xr.Dataset:
             print(f"{Coef = }, {Cmin = }, {Cmax = }, and {Cstep = }", end="\n")
 
     return xds
+
+
+def get_fronts_position(xda: xr.DataArray,
+                        min_value: float,
+                        max_value: float,
+                        xlon2d: np.ndarray = None,
+                        ylat2d: np.ndarray = None) -> xr.DataArray:
+    # Set the criteria mask and apply to the data
+    criteria_mask = (xda > min_value) & (xda < max_value)
+    xda_mask  = xda.where(criteria_mask)
+    
+    # Get front positions by convert to mask where 1 fits the criteria domain
+    front_positions = (xda_mask / xda_mask) * ylat2d
+    
+    
+    
+    
+    
+    np.meshgrid()
