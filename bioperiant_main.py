@@ -132,7 +132,7 @@ class BP12DataProcessor():
                 self.lat2d = nc_data.variables['nav_lat'][:].copy()
                 self.tmask = nc_data.variables['tmask'][0, :].copy()
         else:
-            error = f"The ocean mask file doesn't exist. Does the following path exist?\n{self.path_to_ocean_mask}"
+            error = f"The ocean mask file doesn't exist. Maybe also check whether the following path you provided exist.\n\n{self.path_to_ocean_mask}"
             raise TypeError(error)
             
     def __repr__(self):
