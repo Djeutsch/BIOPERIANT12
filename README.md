@@ -1,8 +1,10 @@
 # **BIOPERIANT12**
-A module to load internally and preprocess the BIOPERIANT12 mesoscale-resolving ocean model outputs from SOCCO data server hosted by the CHPC `lengau` cluster.
 
-***Important:*** *This module is still at its early development stage.*
+A library of Python modules for processing and analysing outputs from various simulations of the BIOPERIANT ocean model developed by Dr. Nicolette Chang from SOCCO. BIOPERIANT12 is a mesoscale-resolving ocean model whose simulations results in a series of experiments to address science questions formulated by the Southern Ocean Carbon – Climate Observatory (SOCCO), a research program within the Holistic Climate Change division, Smart Places, of the Council for Scientific and Industrial Research (CSIR)."
 
+***Important:*** *This Python project is still at its early development stage and is being populated as new processing and analysis tools are developed.*
+
+The package is currently loaded internally for preprocessing the BIOPERIANT12 model outputs from SOCCO data server hosted by `lengau` cluster, at the Centre for High-Performance Computing (CHPC).
 
 ## **Quickstart**
 We have a series of tutorials on Jupyter notebooks in the notebooks folder. We recommend reading them in the following order to see a typical workflow. First install the main required packages as follows: `pip install -r requirements.txt`.
