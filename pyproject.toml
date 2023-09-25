@@ -1,0 +1,23 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "socco-periant"
+version = "0.1.0"
+authors = ["Laique Djeutchouang <ldjeutchouang@aims.ac.tz>", ]
+description = "A library of Python modules for processing and analysing outputs from various simulations of the BIOPERIANT ocean model developed by SOCCO."
+readme = "README.md"
+classifiers = ["Programming Language :: Python :: 3",
+               "License :: OSI Approved :: MIT License",
+               "Operating System :: OS Independent", ]
+
+packages = [{include = "bioperiant_tool"}]
+repository = "https://github.com/Djeutsch/BIOPERIANT12"
+
+[tool.poetry.dependencies]
+python = ">=3.7"
+
+
+
+
