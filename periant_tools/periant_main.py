@@ -1,4 +1,4 @@
-import BIOPERIANT12.periant_tools.utils as utils
+import periant_tools.utils.periant_time as periant_time
 import os
 import pandas as pd
 import xarray as xr
@@ -57,7 +57,7 @@ class BP12DataLoader():
         # Get filenames
         filenames = []
         for year in range(self.year_start, self.year_end + 1):
-            bp12_dates = utils.make_year_month_day_string(
+            bp12_dates = periant_time.make_year_month_day_string(
                 year=year, time_step=self.time_step)
             for day in bp12_dates:
                 filename = self.input_dir + \
@@ -93,7 +93,7 @@ class BP12DataLoader():
         filenames, missingfiles = self.find_files()  # Get the file names
 
         # Get the date stamp data or time axis
-        time_axis = utils.make_time_axis(year_start=self.year_start,
+        time_axis = periant_time.make_time_axis(year_start=self.year_start,
                                          year_end=self.year_end,
                                          time_step=self.time_step)
 
@@ -156,7 +156,7 @@ class BP12DataProcessor():
             xda = xda.rename({"deptht": "depth"})
         else:
             # ocean mask at zlevel = 0
-            xda = xda[:].where(self.tmask[0, :] == 1)
+            xda = xdata_array[:].where(self.tmask[0, :] == 1)
 
         # Update the values of x/lon and y/lat coordinates
         xda.assign_coords(x=self.lon2d[0, :], y=self.lat2d[:, 0])
@@ -211,7 +211,7 @@ class BP12DataProcessor():
         processed_xds["time"] = time_axis
 
         # Rescale the data of the variables
-        processed_xds = utils.rescale_vars_data(processed_xds)
+        processed_xds = periant_time.rescale_vars_data(processed_xds)
         processed_xds = processed_xds.chunk({"time": 100, "lat": 500, "lon": 1000})
         processed_xds.attrs = {"Conventions": "GDT 1.3",
                                "production": "NEMO",

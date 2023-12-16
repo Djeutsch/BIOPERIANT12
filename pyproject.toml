@@ -4,19 +4,29 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "socco-periant"
-version = "0.1.0"
+version = "2023.09"
 authors = ["Laique Djeutchouang <ldjeutchouang@aims.ac.tz>", ]
 description = "A library of Python modules for processing and analysing outputs from various simulations of the BIOPERIANT ocean model developed by SOCCO."
+keywords = ["ocean ecosystems and climate", "ocean/climate model data",
+            "large-scale/multi-dimensional data", "geospatial data processing"]
 readme = "README.md"
-classifiers = ["Programming Language :: Python :: 3",
+classifiers = ["Topic :: Software Development :: Build Tools",
+               "Topic :: Software Development :: Libraries :: Python Modules",
+               "Programming Language :: Python :: 3",
                "License :: OSI Approved :: MIT License",
                "Operating System :: OS Independent", ]
 
+include = ["periant_tools/data_required/nemo_output_coeffs.csv",
+           "periant_tools/data_required/nemo_output_coeffs_bp12.csv"]
 packages = [{include = "bioperiant_tool"}]
 repository = "https://github.com/Djeutsch/BIOPERIANT12"
 
 [tool.poetry.dependencies]
-python = ">=3.7"
+python = ">=3.9, <3.13"
+numpy = "^1.26.0"
+pandas = "^2.1.1"
+xarray = "^2023.8.0"
+netcdf4 = "^1.6.4"
 
 
 
