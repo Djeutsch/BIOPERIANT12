@@ -1,0 +1,55 @@
+vname,vfullname,scale,unit,min0,max0,step0,min50,max50,step50,min100,max100,step100
+votemper,Temperature,1,degC,-2,28,0.5,-2,26,0.5,-2,20,0.5
+vosaline,Salinity   ,1,    ,33,36,0.1,34,36,0.1,34,36,0.1
+speed ,current speed,1,cm/s,0,100,5,-100,100,10,-100,100,10
+vozocrtx,u current surface,1,cm/s,-100,100,10,-100,100,10,-100,100,10
+vomecrty,v current surface,1,cm/s,-100,100,10,-100,100,10,-100,100,10
+vovecrtz,W current ,8640000,cm/day       ,-10,10,40,-200,200,40,-500,500,40
+sozotaux,u wind,1,N.m/s,-0.2,0.2,0.02,,,,,,
+sometauy,v wind,1,N.m/s,-0.2,0.2,0.02,,,,,,
+tau,wind speed,1,N.m/s,0,0.25,0.01,,,,,,
+sowindsp,model wind speed,1,N.m/s,0,0.25,0.01,,,,,,
+chl,total chlorophyll,1000000,mgCHL/m3,0,1,0.02,0,1,0.02,0,1,0.02
+NCHL,total chl nanophyto,1000000,mgCHL/m3,0,1,0.02,0,1,0.02,0,1,0.02
+DCHL,total chl diatom ,1000000,mgCHL/m3,0,1,0.02,0,1,0.02,0,1,0.02
+Alkalini,total alkalinity ,1000000,umol-Alk/L,2100,2440,20,2100,2440,20,2100,2440,20
+CaCO3,CaCO3 ,1000000,tocheck,2100,2440,20,2100,2440,20,2100,2440,20
+TAlk,Total alkalinity Lee ,1,umol-Alk/L,2100,2440,20,2100,2440,20,2100,2440,20
+DIC,DIC,1000000,umol-C/L,1900,2400,20,1900,2300,20,1900,2300,20
+DOC,DOC,1000000,umol-C/L,6,26,2,6,26,2,4,22,2
+Fer,dissolved iron conc,1000000000,umol-Fe/L,0,1,0.2,0,1,0.2,0,1,0.2
+SFe,Small iron conc,1000000000000,tocheck,0,0.5,0,0,1,0,0,0.2,0.01
+BFe,Big iron conc,1000000000000,tocheck,0,0.5,0,0,1,0,0,0.2,0.01
+PAR,light penetration,1,W/m2,0,90,1,0,50,1,0,5,0.1
+PHY,nanophytoplankton conc.,1000000,umol-C/L,0,2.5,0.1,0,2.5,0.1,0,1.5,0.1
+PHY2,diatom conc.,1000000,umol-C/L,0,2.5,0.1,0,2.5,0.1,0,1.5,0.1
+PPPHY,PP nanophyto,10000000,10*mol-C/m3/s,0,0.2,0.01,0,0.2,0.01,0,0.2,0.01
+PPPHY2,PP diatoms,10000000,10*mol-C/m3/s,0,0.2,0.01,0,0.2,0.01,0,0.2,0.01
+NO3,nitrate conc.,131147.540983607,umol-N/L,0,35,1,0,35,1,0,35,1
+NH4,ammonia,131147.540983607,umol-N/L,0,30,1,0,20,0.5,0,20,0.5
+O2,dissolved oxygen conc.,1000000,umol-C/L,200,350,50,200,350,50,200,300,50
+PO4,phosphate conc.,8196.7213114754,uumol-P/L,0,3,0.1,0,2,0.05,0,2,0.05
+POC,big organic C conc.,10000000,10*umol-C/L,0,3,0.5,0,3,0.5,0,2,0.5
+GOC,big organic C conc.,10000000,10*umol-C/L,0,3,0.5,0,3,0.5,0,2,0.5
+Si,silicate conc.,1000000,umol-Si/L,0,100,1,0,100,1,0,100,1
+PH,PH,1,tocheck,0,10,1,0,10,1,0,10,1
+Dsi,Diss silicate conc,1000000,umol-Si/L,0,100,1,0,100,1,0,100,1
+Gsi,Diss silicate conc,1000000,umol-Si/L,0,100,1,0,100,1,0,100,1
+Bsi,Diss silicate conc,1000000,umol-Si/L,0,100,1,0,100,1,0,100,1
+sossheig,SSH         ,1,m  ,-2,2,0.2,,,,,,
+somxl030,mld rho criteria,1,m,0,50,0,,,,,,
+somxl010,mld rho criteria,1,m,0,350,10,,,,,,
+sohefldo,Net heat flux,1,W/m2,-300,300,20,,,,,,
+ileadfra,ice conc.        ,1,%  ,0,1,0.1,,,,,,
+iicethic,ice thickness    ,1,m ,0,10,0.5,,,,,,
+Delc,Delta CO2,1,uatm,-100,100,5,,,,,,
+Cflx,DIC flux,1000000,molC/m2/s,-0.4,0.4,0.01,,,,,,
+coagfer,coagfer,1e12,X,0,0.5,0.001,,,,,,
+scavfer,scavfer,1e12,X,0,0.5,0.001,,,,,,
+scavsfe,scavsfe,1e12,X,0,0.5,0.001,,,,,,
+scavbfe,scavbfe,1e12,X,0,0.5,0.001,,,,,,
+aggdfea,aggdfea,1e12,X,0,0.5,0.001,,,,,,
+aggdfeb,aggdfeb,1e12,X,0,0.5,0.001,,,,,,
+aggdfea,aggdfea,1e12,X,0,0.5,0.001,,,,,,
+vobn2,N2,1e4,X,0,1,0.2,,,,,,
+vomke,KE,1,m2/s2,0,1,0.2,,,,,,

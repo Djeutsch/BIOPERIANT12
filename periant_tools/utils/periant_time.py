@@ -1,8 +1,8 @@
-from nchangPy import nemo_fxns as nf
+from periant_tools.utils import nemo_functions as nf
 import pandas as pd
 import xarray as xr
 import numpy as np
-from typing import Tuple
+from typing import Tuple, List
 
 import logging
 logging.basicConfig(level=logging.INFO)
